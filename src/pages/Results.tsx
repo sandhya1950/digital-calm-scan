@@ -3,6 +3,7 @@ import { calculateResults } from "@/utils/calculateResults";
 import ScoreCircle from "@/components/ScoreCircle";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import PersonalizedImprovementSection from "@/components/PersonalizedImprovementSection";
 import { Button } from "@/components/ui/button";
 import { 
   RefreshCw, 
@@ -10,7 +11,6 @@ import {
   TrendingUp, 
   AlertTriangle, 
   CheckCircle2,
-  Lightbulb,
   Target,
   Zap
 } from "lucide-react";
@@ -139,33 +139,8 @@ const Results = () => {
               )}
             </div>
 
-            {/* Improvement tips */}
-            {results.improvementTips.length > 0 && (
-              <div className="bg-card rounded-2xl p-6 md:p-8 shadow-card border border-border/50 mb-8 animate-fade-up opacity-0 stagger-5">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
-                    <Lightbulb className="w-5 h-5 text-primary" />
-                  </div>
-                  <h2 className="text-xl font-semibold">Actionable Tips</h2>
-                </div>
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {results.improvementTips.map((tip, index) => (
-                    <div 
-                      key={index} 
-                      className="p-4 rounded-xl bg-secondary/50 border border-border/50"
-                    >
-                      <div className="flex items-center gap-2 mb-2">
-                        <Sparkles className="w-4 h-4 text-primary" />
-                        <span className="text-sm font-medium text-primary">Tip {index + 1}</span>
-                      </div>
-                      <p className="text-sm text-muted-foreground leading-relaxed">
-                        {tip}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
+            {/* Personalized Improvement Section */}
+            <PersonalizedImprovementSection answers={answers} />
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-up opacity-0" style={{ animationDelay: '0.6s' }}>
