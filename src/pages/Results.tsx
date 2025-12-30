@@ -12,13 +12,15 @@ import {
   AlertTriangle, 
   CheckCircle2,
   Target,
-  Zap
+  Zap,
+  ArrowRight
 } from "lucide-react";
 
 const Results = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const answers = location.state?.answers as Record<number, number> | undefined;
+  const sleepAnswers = location.state?.sleepAnswers as Record<number, number> | null | undefined;
 
   // Redirect if no answers
   if (!answers) {
@@ -52,10 +54,17 @@ const Results = () => {
   const IllustrationIcon = illustration.icon;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background relative overflow-hidden">
+      {/* Background decorations */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute top-20 -left-32 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-float" />
+        <div className="absolute bottom-40 -right-32 w-80 h-80 bg-accent/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '3s' }} />
+        <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-success/5 rounded-full blur-3xl" />
+      </div>
+
       <Header />
 
-      <main className="pt-24 pb-20">
+      <main className="relative z-10 pt-24 pb-20">
         <div className="container px-4">
           {/* Results header */}
           <div className="max-w-4xl mx-auto">
@@ -70,7 +79,7 @@ const Results = () => {
             </div>
 
             {/* Main score card */}
-            <div className="bg-card rounded-3xl p-8 md:p-12 shadow-elevated border border-border/50 mb-8 animate-fade-up opacity-0 stagger-2">
+            <div className="bg-card rounded-3xl p-8 md:p-12 shadow-elevated border border-border/50 mb-8 animate-fade-up opacity-0 stagger-2 transition-all duration-500 hover:shadow-glow-primary">
               <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
                 {/* Score circle */}
                 <div className="flex-shrink-0">
@@ -83,7 +92,7 @@ const Results = () => {
 
                 {/* Level info */}
                 <div className="flex-1 text-center md:text-left">
-                  <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${illustration.bgColor} ${illustration.borderColor} border mb-4`}>
+                  <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${illustration.bgColor} ${illustration.borderColor} border mb-4 animate-scale-in`} style={{ animationDelay: '0.5s' }}>
                     <IllustrationIcon className={`w-5 h-5 ${illustration.color}`} />
                     <span className={`font-semibold ${illustration.color}`}>
                       {results.levelLabel}
@@ -100,7 +109,7 @@ const Results = () => {
             <div className="grid md:grid-cols-2 gap-6 mb-8">
               {/* Strengths */}
               {results.strengths.length > 0 && (
-                <div className="bg-card rounded-2xl p-6 shadow-card border border-border/50 animate-fade-up opacity-0 stagger-3">
+                <div className="bg-card rounded-2xl p-6 shadow-card border border-border/50 animate-fade-up opacity-0 stagger-3 transition-all duration-300 hover:shadow-elevated hover:-translate-y-1">
                   <div className="flex items-center gap-3 mb-4">
                     <div className="w-10 h-10 rounded-xl bg-success/10 flex items-center justify-center">
                       <TrendingUp className="w-5 h-5 text-success" />
@@ -120,7 +129,7 @@ const Results = () => {
 
               {/* Weak areas */}
               {results.weakAreas.length > 0 && (
-                <div className="bg-card rounded-2xl p-6 shadow-card border border-border/50 animate-fade-up opacity-0 stagger-4">
+                <div className="bg-card rounded-2xl p-6 shadow-card border border-border/50 animate-fade-up opacity-0 stagger-4 transition-all duration-300 hover:shadow-elevated hover:-translate-y-1">
                   <div className="flex items-center gap-3 mb-4">
                     <div className="w-10 h-10 rounded-xl bg-warning/10 flex items-center justify-center">
                       <Target className="w-5 h-5 text-warning" />
@@ -148,7 +157,7 @@ const Results = () => {
                 variant="outline" 
                 size="lg" 
                 onClick={() => navigate('/quiz')}
-                className="w-full sm:w-auto"
+                className="w-full sm:w-auto transition-all duration-300 hover:scale-105"
               >
                 <RefreshCw className="w-5 h-5" />
                 Retake Assessment
@@ -156,14 +165,12 @@ const Results = () => {
               <Button 
                 variant="hero" 
                 size="lg"
-                onClick={() => {
-                  // Scroll to tips section
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
-                className="w-full sm:w-auto"
+                onClick={() => navigate('/improvement', { state: { answers, sleepAnswers } })}
+                className="w-full sm:w-auto transition-all duration-300 hover:scale-105 group"
               >
                 <Sparkles className="w-5 h-5" />
-                Start Improving Today
+                Start Improving
+                <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
               </Button>
             </div>
           </div>
