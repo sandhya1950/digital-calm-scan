@@ -53,13 +53,35 @@ const Results = () => {
   const illustration = levelIllustration[results.level];
   const IllustrationIcon = illustration.icon;
 
+  // Dynamic background based on score level
+  const levelBgClasses = {
+    low: "from-success/5 via-accent/5 to-success/10",
+    moderate: "from-warning/5 via-amber-100/10 to-orange-100/10", 
+    high: "from-destructive/5 via-red-100/10 to-orange-100/10"
+  };
+
   return (
-    <div className="min-h-screen bg-background relative overflow-hidden">
-      {/* Background decorations */}
+    <div className={`min-h-screen relative overflow-hidden bg-gradient-to-br ${levelBgClasses[results.level]}`}>
+      {/* Dynamic background decorations based on score */}
       <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute top-20 -left-32 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-float" />
-        <div className="absolute bottom-40 -right-32 w-80 h-80 bg-accent/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '3s' }} />
-        <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-success/5 rounded-full blur-3xl" />
+        <div className={`absolute top-20 -left-32 w-96 h-96 rounded-full blur-3xl animate-float ${
+          results.level === 'low' ? 'bg-success/10' : 
+          results.level === 'moderate' ? 'bg-warning/10' : 
+          'bg-destructive/10'
+        }`} />
+        <div className={`absolute bottom-40 -right-32 w-80 h-80 rounded-full blur-3xl animate-float ${
+          results.level === 'low' ? 'bg-accent/10' : 
+          results.level === 'moderate' ? 'bg-amber-200/10' : 
+          'bg-red-200/10'
+        }`} style={{ animationDelay: '3s' }} />
+        <div className={`absolute top-1/3 right-1/4 w-64 h-64 rounded-full blur-3xl ${
+          results.level === 'low' ? 'bg-success/5' : 
+          results.level === 'moderate' ? 'bg-warning/5' : 
+          'bg-destructive/5'
+        }`} />
+        {/* Additional decorative shapes */}
+        <div className="absolute top-1/2 left-10 w-32 h-32 border border-primary/10 rounded-full" />
+        <div className="absolute bottom-20 right-20 w-48 h-48 border border-accent/10 rounded-full" />
       </div>
 
       <Header />
@@ -165,7 +187,10 @@ const Results = () => {
               <Button 
                 variant="hero" 
                 size="lg"
-                onClick={() => navigate('/improvement', { state: { answers, sleepAnswers } })}
+                onClick={() => {
+                  window.scrollTo(0, 0);
+                  navigate('/improvement', { state: { answers, sleepAnswers } });
+                }}
                 className="w-full sm:w-auto transition-all duration-300 hover:scale-105 group"
               >
                 <Sparkles className="w-5 h-5" />

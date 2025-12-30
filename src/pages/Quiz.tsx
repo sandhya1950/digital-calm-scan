@@ -76,12 +76,20 @@ const Quiz = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background relative overflow-hidden">
+    <div className="min-h-screen relative overflow-hidden">
+      {/* Colorful gradient background */}
+      <div className="fixed inset-0 bg-gradient-to-br from-primary/5 via-background to-accent/10 pointer-events-none" />
+      
       {/* Background decorations */}
       <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute top-20 -left-32 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-float" />
-        <div className="absolute bottom-40 -right-32 w-80 h-80 bg-accent/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '3s' }} />
-        <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-primary/3 rounded-full blur-3xl" />
+        <div className="absolute top-20 -left-32 w-96 h-96 bg-gradient-to-br from-primary/10 to-accent/5 rounded-full blur-3xl animate-float" />
+        <div className="absolute bottom-40 -right-32 w-80 h-80 bg-gradient-to-tl from-accent/10 to-primary/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '3s' }} />
+        <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-gradient-to-r from-primary/5 to-success/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/3 w-48 h-48 bg-gradient-to-br from-success/5 to-accent/5 rounded-full blur-3xl" />
+        
+        {/* Decorative circles */}
+        <div className="absolute top-40 right-20 w-24 h-24 border border-primary/10 rounded-full" />
+        <div className="absolute bottom-60 left-16 w-16 h-16 border border-accent/10 rounded-full" />
       </div>
 
       <Header />

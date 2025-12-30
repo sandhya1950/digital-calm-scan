@@ -1,3 +1,4 @@
+import React from "react";
 import { useLocation, useNavigate, Navigate } from "react-router-dom";
 import { calculateResults } from "@/utils/calculateResults";
 import { questions } from "@/data/questions";
@@ -81,13 +82,26 @@ const Improvement = () => {
     ? sleepScore <= 12 ? 'low' : sleepScore <= 20 ? 'moderate' : 'high'
     : null;
 
+  // Scroll to top on mount
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
-    <div className="min-h-screen bg-background relative overflow-hidden">
+    <div className="min-h-screen relative overflow-hidden">
+      {/* Colorful gradient background */}
+      <div className="fixed inset-0 bg-gradient-to-br from-accent/5 via-background to-primary/10 pointer-events-none" />
+      
       {/* Background decorations */}
       <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute top-32 -right-40 w-[500px] h-[500px] bg-gradient-to-br from-accent/10 to-primary/5 rounded-full blur-3xl animate-float" />
-        <div className="absolute bottom-20 -left-32 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }} />
-        <div className="absolute top-1/2 right-1/4 w-72 h-72 bg-success/5 rounded-full blur-3xl" />
+        <div className="absolute top-32 -right-40 w-[500px] h-[500px] bg-gradient-to-br from-accent/15 to-primary/5 rounded-full blur-3xl animate-float" />
+        <div className="absolute bottom-20 -left-32 w-96 h-96 bg-gradient-to-tr from-primary/10 to-success/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }} />
+        <div className="absolute top-1/2 right-1/4 w-72 h-72 bg-gradient-to-bl from-success/10 to-accent/5 rounded-full blur-3xl" />
+        
+        {/* Motivational abstract shapes */}
+        <div className="absolute top-20 left-[20%] w-20 h-20 border border-success/15 rounded-full" />
+        <div className="absolute bottom-32 right-[15%] w-32 h-32 border border-primary/10 rounded-full" />
+        <div className="absolute top-1/3 left-10 w-16 h-16 border border-accent/10 rounded-full" />
       </div>
 
       <Header />
