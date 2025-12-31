@@ -73,9 +73,9 @@ const HeroSection = () => {
 
         {/* CTA Button */}
         <div className="animate-fade-up opacity-0 stagger-4 mt-10">
-          <Link to="/quiz">
+          <Link to="/welcome">
             <Button variant="hero" size="xl" className="group">
-              Take the Assessment
+              Start the Questionnaire
               <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
             </Button>
           </Link>

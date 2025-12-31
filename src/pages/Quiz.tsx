@@ -1,7 +1,8 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation, Navigate } from "react-router-dom";
 import { questions } from "@/data/questions";
 import { sleepQuestions } from "@/data/sleepQuestions";
+import { UserInfo } from "@/types/userInfo";
 import QuestionCard from "@/components/QuestionCard";
 import SleepQuestionCard from "@/components/SleepQuestionCard";
 import ProgressIndicator from "@/components/ProgressIndicator";
@@ -12,11 +13,23 @@ import { ArrowRight, AlertCircle, Moon, SkipForward } from "lucide-react";
 
 const Quiz = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const userInfo = location.state?.userInfo as UserInfo | undefined;
+
+  // Redirect if no userInfo
+  if (!userInfo) {
+    return <Navigate to="/welcome" replace />;
+  }
+
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [sleepAnswers, setSleepAnswers] = useState<Record<number, number>>({});
   const [showError, setShowError] = useState(false);
   const [showSleepSection, setShowSleepSection] = useState(false);
   const [sleepSkipped, setSleepSkipped] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleAnswer = (questionId: number, value: number) => {
     setAnswers((prev) => ({ ...prev, [questionId]: value }));
@@ -54,7 +67,7 @@ const Quiz = () => {
 
   const handleSkipSleep = () => {
     setSleepSkipped(true);
-    navigate('/results', { state: { answers, sleepAnswers: null } });
+    navigate('/results', { state: { answers, sleepAnswers: null, userInfo } });
   };
 
   const handleSubmit = () => {
@@ -69,9 +82,9 @@ const Quiz = () => {
     }
 
     if (showSleepSection && !sleepSkipped) {
-      navigate('/results', { state: { answers, sleepAnswers: allSleepAnswered ? sleepAnswers : null } });
+      navigate('/results', { state: { answers, sleepAnswers: allSleepAnswered ? sleepAnswers : null, userInfo } });
     } else {
-      navigate('/results', { state: { answers, sleepAnswers: null } });
+      navigate('/results', { state: { answers, sleepAnswers: null, userInfo } });
     }
   };
 
