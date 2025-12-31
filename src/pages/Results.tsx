@@ -21,10 +21,11 @@ const Results = () => {
   const navigate = useNavigate();
   const answers = location.state?.answers as Record<number, number> | undefined;
   const sleepAnswers = location.state?.sleepAnswers as Record<number, number> | null | undefined;
+  const userInfo = location.state?.userInfo;
 
   // Redirect if no answers
   if (!answers) {
-    return <Navigate to="/quiz" replace />;
+    return <Navigate to="/welcome" replace />;
   }
 
   const results = calculateResults(answers);
@@ -189,7 +190,7 @@ const Results = () => {
                 size="lg"
                 onClick={() => {
                   window.scrollTo(0, 0);
-                  navigate('/improvement', { state: { answers, sleepAnswers } });
+                  navigate('/improvement', { state: { answers, sleepAnswers, userInfo } });
                 }}
                 className="w-full sm:w-auto transition-all duration-300 hover:scale-105 group"
               >
