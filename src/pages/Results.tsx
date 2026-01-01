@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useLocation, useNavigate, Navigate } from "react-router-dom";
 import { calculateResults } from "@/utils/calculateResults";
 import ScoreCircle from "@/components/ScoreCircle";
@@ -22,6 +23,11 @@ const Results = () => {
   const answers = location.state?.answers as Record<number, number> | undefined;
   const sleepAnswers = location.state?.sleepAnswers as Record<number, number> | null | undefined;
   const userInfo = location.state?.userInfo;
+
+  // MANDATORY: Always scroll to top when Results page loads
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, []);
 
   // Redirect if no answers
   if (!answers) {
